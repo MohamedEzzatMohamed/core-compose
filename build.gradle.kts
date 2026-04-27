@@ -14,7 +14,7 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "com.shared.core"
-        compileSdk = 36
+        compileSdk = 37
         minSdk = 24
 
         withHostTestBuilder {
@@ -54,6 +54,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     sourceSets {
 
         androidMain {
@@ -78,7 +80,7 @@ kotlin {
 
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.10")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.20")
 
                 //Lifecycle
                 api("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
@@ -126,10 +128,15 @@ kotlin {
             }
         }
 
+        jvmMain.dependencies {
+            api("io.ktor:ktor-client-cio:3.3.0")
+
+            api("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
+        }
 
         commonTest {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:2.2.10")
+                implementation("org.jetbrains.kotlin:kotlin-test:2.3.20")
             }
         }
 

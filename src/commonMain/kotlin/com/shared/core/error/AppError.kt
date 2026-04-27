@@ -7,7 +7,7 @@ sealed class AppError {
     var extraData: Any? = null
     var message: String? = null
     var logMessage: String? = null
-    var logTag: String = "Mdawm Error =>"
+    var logTag: String = "Platform Error =>"
     var logPriority: ErrorLogPriority = ErrorLogPriority.ERROR
 
     fun logError() {

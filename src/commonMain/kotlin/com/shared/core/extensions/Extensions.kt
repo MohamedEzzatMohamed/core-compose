@@ -16,13 +16,15 @@ fun ViewModel.viewModelScope(block: suspend () -> Unit) = this.viewModelScope.la
 
 suspend inline fun <T> Flow<State<T>>.collectOnFlowState(
     crossinline onLoading: () -> Unit = {},
+    crossinline onFailure: (code: Int?, message: String, throwable: Throwable?) -> Unit,
     crossinline onError: (AppError) -> Unit,
     crossinline onSuccess: suspend (Any) -> Unit,
 ) = collect {
     onLoading()
     when (it) {
-        is State.Error -> onError(it.error)
         is State.Loading -> {}
+        is State.Failure -> onFailure(it.code, it.message, it.throwable)
+        is State.Error -> onError(it.error)
         is State.Success -> onSuccess(it.data ?: return@collect)
     }
 }
