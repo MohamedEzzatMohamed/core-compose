@@ -1,6 +1,7 @@
 package com.shared.core.data_store_module.preferabce_storage
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.KSerializer
 
 interface PreferencesStorage {
 
@@ -16,6 +17,18 @@ interface PreferencesStorage {
 
     suspend fun setString(key: String, value: String)
     fun getString(key: String, default: String): Flow<String?>
+
+    suspend fun <T> saveObject(key: String, value: T, serializer: KSerializer<T>)
+
+    fun <T> getObject(key: String, serializer: KSerializer<T>): Flow<T?>
+
+    suspend fun removeBooleanByKey(key: String)
+
+    suspend fun removeIntegerByKey(key: String)
+
+    suspend fun removeFloatByKey(key: String)
+
+    suspend fun removeStringByKey(key: String)
 
     suspend fun clearAll()
 }

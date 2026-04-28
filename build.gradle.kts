@@ -117,6 +117,7 @@ kotlin {
                 //Kotor
                 val ktorVersion = "3.3.0"
                 api("io.ktor:ktor-client-core:$ktorVersion")
+                api("io.ktor:ktor-client-auth:$ktorVersion")
                 api("io.ktor:ktor-client-logging:$ktorVersion")
                 api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 api("io.ktor:ktor-client-content-negotiation:$ktorVersion")

@@ -7,11 +7,20 @@ import com.shared.core.error.AppError
 import com.shared.core.state.State
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 
 
 fun ViewModel.viewModelScope(block: suspend () -> Unit) = this.viewModelScope.launch {
     block()
 }
+
+
+fun <T> KSerializer<T>.encodeToString(value: T) =
+    Json.encodeToString(serializer = this, value = value)
+
+fun <T> KSerializer<T>.decodeFromString(jsonString: String) =
+    Json.decodeFromString(deserializer = this, string = jsonString)
 
 
 suspend inline fun <T> Flow<State<T>>.collectOnFlowState(
