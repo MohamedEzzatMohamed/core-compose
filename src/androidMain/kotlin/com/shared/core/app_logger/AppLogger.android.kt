@@ -4,24 +4,15 @@ import android.util.Log
 
 actual object AppLogger {
 
-    actual fun e(
-        priority: Int,
-        tag: String,
-        message: String,
-        throwable: Throwable?,
-    ) {
-        if (throwable != null) {
-            Log.e("priority: $priority tag: $tag", message, throwable)
-        } else {
-            Log.e("priority: $priority tag: $tag", message)
-        }
+    actual fun d(message: String, tag: String) {
+        Log.d(tag, message)
     }
 
-    actual fun w(priority: Int, tag: String, message: String) {
-        Log.d("priority: $priority tag: $tag", message)
+    actual fun i(message: String, tag: String) {
+        Log.i(tag, message)
     }
 
-    actual fun i(priority: Int, tag: String, message: String) {
-        Log.i("priority: $priority tag: $tag", message)
+    actual fun e(message: String, tag: String, throwable: Throwable?) {
+        Log.e(tag, message, throwable)
     }
 }

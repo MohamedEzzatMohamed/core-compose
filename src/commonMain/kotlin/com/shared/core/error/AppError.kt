@@ -17,19 +17,11 @@ sealed class AppError {
 
         when (logPriority) {
 
-            ErrorLogPriority.ERROR -> AppLogger.e(
-                priority = logPriority.level, tag = logTag, message = message, throwable = exception
-            )
+            ErrorLogPriority.ERROR -> AppLogger.e(tag = logTag, message = message, throwable = exception)
 
-            ErrorLogPriority.INFO -> AppLogger.i(
-                priority = logPriority.level,
-                tag = logTag,
-                message = message,
-            )
+            ErrorLogPriority.INFO -> AppLogger.i(tag = logTag, message = message)
 
-            ErrorLogPriority.WARN -> AppLogger.w(
-                priority = logPriority.level, tag = logTag, message = message
-            )
+            ErrorLogPriority.WARN -> AppLogger.e(tag = logTag, message = message)
         }
     }
 

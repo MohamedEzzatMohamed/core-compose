@@ -4,25 +4,16 @@ import platform.Foundation.NSLog
 
 actual object AppLogger {
 
-    actual fun e(
-        priority: Int,
-        tag: String,
-        message: String,
-        throwable: Throwable?,
-    ) {
-
-        if (throwable != null) {
-            NSLog("PRIORITY: [$priority]. ERROR: [$tag] $message. Throwable: $throwable CAUSE ${throwable.cause}")
-        } else {
-            NSLog("PRIORITY: [$priority]. ERROR: [$tag] $message")
-        }
+    actual fun d(message: String, tag: String) {
+        NSLog("DEBUG: [$tag] $message")
     }
 
-    actual fun w(priority: Int, tag: String, message: String) {
-        NSLog("PRIORITY: [$priority]. WARNING: [$tag] $message")
+    actual fun i(message: String, tag: String) {
+        NSLog("INFO: [$tag] $message")
     }
 
-    actual fun i(priority: Int, tag: String, message: String) {
-        NSLog("PRIORITY: [$priority]. INFO: [$tag] $message")
+    actual fun e(message: String, tag: String, throwable: Throwable?) {
+        val errorDetail = throwable?.let { "\nError: ${it.message}" } ?: ""
+        NSLog("ERROR: [$tag] $message $errorDetail")
     }
 }
