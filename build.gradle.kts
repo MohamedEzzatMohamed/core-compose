@@ -14,7 +14,7 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "com.shared.core"
-        compileSdk = 37
+        compileSdk = 36
         minSdk = 24
 
         withHostTestBuilder {
@@ -60,11 +60,13 @@ kotlin {
 
         androidMain {
             dependencies {
-                api(compose.preview)
-                api("androidx.activity:activity-compose:1.11.0")
 
-                api("io.ktor:ktor-client-android:3.3.0")
-                api("io.ktor:ktor-client-okhttp:3.3.0")
+                // Android Basics & Compose
+                api(compose.preview)
+                api("androidx.core:core-ktx:1.12.0")
+                api("androidx.activity:activity-compose:1.11.0")
+                api("androidx.compose.ui:ui-tooling-preview")
+
 
                 val lifecycle = "2.9.3"
                 api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
@@ -75,6 +77,20 @@ kotlin {
                 api("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle")
                 api("androidx.lifecycle:lifecycle-common-java8:$lifecycle")
                 api("androidx.lifecycle:lifecycle-service:$lifecycle")
+
+
+                // Network (Ktor)
+                api("io.ktor:ktor-client-android:3.3.0")
+                api("io.ktor:ktor-client-okhttp:3.3.0")
+
+
+                // Coroutines
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+
+                // Koin
+                val koin = "3.5.3"
+                api("io.insert-koin:koin-android:$koin")
+                api("io.insert-koin:koin-androidx-compose:$koin")
             }
         }
 
@@ -109,6 +125,11 @@ kotlin {
 
                 //Coroutines
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+
+
+                //Data Store
+                api("androidx.datastore:datastore:1.2.1")
+                api("androidx.datastore:datastore-preferences:1.2.1")
 
 
                 api(compose.runtime)
