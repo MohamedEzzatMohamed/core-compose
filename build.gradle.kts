@@ -1,7 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
-
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
@@ -91,6 +90,12 @@ kotlin {
                 val koin = "3.5.3"
                 api("io.insert-koin:koin-android:$koin")
                 api("io.insert-koin:koin-androidx-compose:$koin")
+
+                //Firebase
+                api("com.google.firebase:firebase-common-ktx:21.0.0")
+                api("com.google.firebase:firebase-analytics")
+                api("com.google.firebase:firebase-crashlytics")
+
             }
         }
 
@@ -133,6 +138,15 @@ kotlin {
                 api("androidx.datastore:datastore-preferences:1.2.1")
 
 
+                //Firebase
+                api("dev.gitlive:firebase-common:1.13.0")
+                api("dev.gitlive:firebase-firestore:1.13.0")
+                api("dev.gitlive:firebase-auth:1.13.0")
+                api("dev.gitlive:firebase-storage:1.13.0")
+                api("dev.gitlive:firebase-config:1.13.0")
+                api("dev.gitlive:firebase-messaging:1.13.0")
+
+
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material3)
@@ -173,4 +187,9 @@ kotlin {
         }
     }
 
+}
+
+
+dependencies {
+    "androidMainApi"(platform("com.google.firebase:firebase-bom:33.1.0"))
 }
