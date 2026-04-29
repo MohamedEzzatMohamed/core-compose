@@ -5,13 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shared.core.error.AppError
 import com.shared.core.state.State
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
 
-fun ViewModel.viewModelScope(block: suspend () -> Unit) = this.viewModelScope.launch {
+fun ViewModel.viewModelScope(
+    context: CoroutineDispatcher = Dispatchers.IO,
+    block: suspend () -> Unit
+) = this.viewModelScope.launch(context = context) {
     block()
 }
 
