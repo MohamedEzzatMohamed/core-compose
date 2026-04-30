@@ -138,14 +138,6 @@ kotlin {
                 api("androidx.datastore:datastore-preferences:1.2.1")
 
 
-                //Firebase
-                api("dev.gitlive:firebase-common:1.13.0")
-                api("dev.gitlive:firebase-firestore:1.13.0")
-                api("dev.gitlive:firebase-auth:1.13.0")
-                api("dev.gitlive:firebase-storage:1.13.0")
-                api("dev.gitlive:firebase-config:1.13.0")
-                api("dev.gitlive:firebase-messaging:1.13.0")
-
 
                 api(compose.runtime)
                 api(compose.foundation)
