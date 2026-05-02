@@ -6,7 +6,7 @@ expect fun getPlatform(): Platform
 val platform get() = getPlatform()
 
 interface Platform {
-    val name: String
+    val platformType: PlatformTypeEnum
 
     val osVersion: String
 }

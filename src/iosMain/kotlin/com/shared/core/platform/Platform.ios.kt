@@ -3,7 +3,7 @@ package com.shared.core.platform
 import platform.UIKit.UIDevice
 
 class IOSPlatform : Platform {
-    override val name: String get() = UIDevice.currentDevice.systemName()
+    override val platformType: PlatformTypeEnum get() = PlatformTypeEnum.IOS
     override val osVersion: String get() = UIDevice.currentDevice.systemVersion
 }
 
