@@ -14,39 +14,47 @@ import okio.Path.Companion.toPath
 import org.koin.dsl.module
 import java.io.File
 
-private const val PREFERENCES_TEMP = "dice.preferences_pb.tmp"
-
 actual val dataStorePlatformModule = module {
-    single<DataStore<Preferences>> {
-        val appDir = getAppDataDir()
-        if (!appDir.exists()) appDir.mkdirs()
-
-        val tmpFile = File(appDir, PREFERENCES_TEMP)
-        if (tmpFile.exists()) tmpFile.delete()
-
-        val dataStoreFile = File(appDir, dataStoreFileName)
-
-        PreferenceDataStoreFactory.createWithPath(
-            corruptionHandler = ReplaceFileCorruptionHandler { emptyPreferences() },
-            produceFile = { dataStoreFile.absolutePath.toPath() },
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-        )
-    }
-
+    single<DataStore<Preferences>> { createDesktopDataStore() }
     single<PreferencesStorage> { PreferencesStorageImpl(dataStore = get()) }
+}
+
+private var dataStoreInstance: DataStore<Preferences>? = null
+
+fun createDesktopDataStore(): DataStore<Preferences> {
+    return dataStoreInstance ?: synchronized(Unit) {
+        dataStoreInstance ?: run {
+            val appDir = getAppDataDir()
+            if (!appDir.exists()) appDir.mkdirs()
+
+            val dataStoreFile = File(appDir, dataStoreFileName)
+
+            PreferenceDataStoreFactory.createWithPath(
+                corruptionHandler = ReplaceFileCorruptionHandler { emptyPreferences() },
+                produceFile = { dataStoreFile.absolutePath.toPath() },
+                scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            ).also { dataStoreInstance = it }
+        }
+    }
 }
 
 
 private fun getAppDataDir(): File {
     val osName = System.getProperty("os.name").lowercase()
     val userHome = System.getProperty("user.home")
-    return when {
+    val appName = "Babu"
+    val baseDir = when {
         osName.contains("win") -> {
+
             val localAppData = System.getenv("LOCALAPPDATA") ?: "$userHome\\AppData\\Local"
-            File(localAppData, "babu")
+            File(localAppData, appName)
         }
 
-        osName.contains("mac") -> File(userHome, "Library/Application Support/babu")
-        else -> File(userHome, ".babu")
+        osName.contains("mac") -> File(userHome, "Library/Application Support/$appName")
+
+        else -> File(userHome, ".$appName".lowercase())
+
     }
+    if (!baseDir.exists()) baseDir.mkdirs()
+    return baseDir
 }
