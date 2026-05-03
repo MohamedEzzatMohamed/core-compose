@@ -13,6 +13,7 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "com.shared.core"
+        //noinspection GradleDependency
         compileSdk = 36
         minSdk = 24
 
@@ -138,6 +139,11 @@ kotlin {
                 api("androidx.datastore:datastore-preferences:1.2.1")
 
 
+
+                //Coil
+                val coil = "3.0.4"
+                api("io.coil-kt.coil3:coil-compose:$coil")
+                api("io.coil-kt.coil3:coil-network-ktor3:$coil")
 
                 api(compose.runtime)
                 api(compose.foundation)
