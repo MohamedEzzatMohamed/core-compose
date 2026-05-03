@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface LocaleHelper {
 
     val currentLanguage: StateFlow<AppLanguageEnum>
+
+    val appLanguageList : List<AppLanguageEnum>
     suspend fun changeLanguage(language: AppLanguageEnum)
 
 }

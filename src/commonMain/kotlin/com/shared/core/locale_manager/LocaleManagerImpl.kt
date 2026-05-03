@@ -17,8 +17,10 @@ class LocaleManagerImpl(
 ) : LocaleHelper {
 
 
-    private val _currentLanguage = MutableStateFlow(AppLanguageEnum.ENGLISH)
+    private val _currentLanguage = MutableStateFlow(value = AppLanguageEnum.ENGLISH)
     override val currentLanguage: StateFlow<AppLanguageEnum> = _currentLanguage
+
+    override val appLanguageList: List<AppLanguageEnum> get() = AppLanguageEnum.entries
 
     init {
         coroutineScope.launch { initializeLanguage() }
