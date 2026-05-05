@@ -12,9 +12,13 @@ fun isEmailValid(email: String): Boolean {
     return email.trim().matches(emailRegex)
 }
 
-fun isPasswordValid(password: String): Boolean {
+fun isPasswordValid(password: String, witLater : Boolean = false): Boolean {
     val passwordRegex = Regex(
-        pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+        pattern = if (witLater){
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+        }else{
+            "^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+        }
     )
     return passwordRegex.matches(password)
 }
