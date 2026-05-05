@@ -139,11 +139,14 @@ kotlin {
                 api("androidx.datastore:datastore-preferences:1.2.1")
 
 
-
                 //Coil
                 val coil = "3.0.4"
                 api("io.coil-kt.coil3:coil-compose:$coil")
                 api("io.coil-kt.coil3:coil-network-ktor3:$coil")
+
+                val composeIcons = "1.1.1"
+                api("br.com.devsrsouza.compose.icons:tabler-icons:$composeIcons")
+                api("br.com.devsrsouza.compose.icons:feather:$composeIcons")
 
                 api(compose.runtime)
                 api(compose.foundation)

@@ -3,7 +3,7 @@ package com.shared.core.extensions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shared.core.error.AppError
+import com.shared.core.app_error.AppError
 import com.shared.core.state.State
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -31,9 +31,9 @@ fun <T> KSerializer<T>.decodeFromString(jsonString: String) =
 
 suspend inline fun <T> Flow<State<T>>.collectOnFlowState(
     crossinline onLoading: () -> Unit = {},
-    crossinline onFailure: (code: Int?, message: String, throwable: Throwable?) -> Unit,
+    crossinline onFailure: (code: Int?, message: String, throwable: Throwable?) -> Unit = { _, _, _ -> },
     crossinline onError: (AppError) -> Unit,
-    crossinline onSuccess: suspend (Any) -> Unit,
+    crossinline onSuccess: suspend (T) -> Unit,
 ) = collect {
     onLoading()
     when (it) {

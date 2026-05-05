@@ -1,6 +1,6 @@
 package com.shared.core.state
 
-import com.shared.core.error.AppError
+import com.shared.core.app_error.AppError
 
 
 sealed class State<out T> {

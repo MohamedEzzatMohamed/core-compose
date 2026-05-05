@@ -32,16 +32,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.shared.core.validation_method.isNumber
 import com.shared.core.ui.general_text_field.ui_text.UiText
+import com.shared.core.validation_method.isNumber
 
 
 @Composable
 fun GeneralTextField(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     placeholder: String,
     text: String = "",
     textStyle: TextStyle = TextStyle.Default,
+    placeholderTextStyle: TextStyle = TextStyle.Default,
     textAlignment: Alignment.Vertical = Alignment.CenterVertically,
     cursorBrush: Brush = SolidColor(Color.Black),
     focusedColor: Color = MaterialTheme.colorScheme.primary,
@@ -76,15 +77,27 @@ fun GeneralTextField(
 
     Column {
         BasicTextField(
-            value = if (isKeyboardTypeNumber) if (isNumber(value = text)) text else text else text,
-            onValueChange = { if (isKeyboardTypeNumber) if (isNumber(value = it)) onValueChange(it) else onValueChange(it) },
+            value = if (isKeyboardTypeNumber) {
+                if (isNumber(value = text)) text else text
+            } else text,
+            onValueChange = {
+                if (isKeyboardTypeNumber) {
+                    if (isNumber(value = it)) onValueChange(it)
+                } else {
+                    onValueChange(it)
+                }
+            },
             textStyle = textStyle,
             maxLines = maxLine,
             singleLine = singleLine,
             interactionSource = interactionSource,
             readOnly = readOnly,
             visualTransformation = if (keyboardType == KeyboardType.Password) {
-                if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
+                if (isVisible) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                }
             } else {
                 VisualTransformation.None
             },
@@ -108,7 +121,7 @@ fun GeneralTextField(
                     }
                     Box(modifier = Modifier.weight(1.0f).padding(vertical = 16.dp)) {
                         if (text.isEmpty()) {
-                            Text(text = placeholder, style = textStyle)
+                            Text(text = placeholder, style = placeholderTextStyle)
                         }
                         Box(modifier = Modifier.fillMaxWidth()) { innerTextField() }
                     }

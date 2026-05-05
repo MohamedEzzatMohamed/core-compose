@@ -1,12 +1,7 @@
 package com.shared.core.bases.base_viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shared.core.error.AppError
-import com.shared.core.error.AppErrorHandler
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,10 +11,7 @@ import kotlinx.coroutines.launch
 
 
 abstract class BaseViewModel<Intent : ViewIntent, State : ViewState>(initialState: State) :
-    ViewModel(), AppErrorHandler {
-
-    var uiState by mutableStateOf(initialState)
-        private set
+    ViewModel() {
 
     private val _uiStateFlow = MutableStateFlow(initialState)
     val uiStateFlow = _uiStateFlow.asStateFlow()
@@ -38,22 +30,11 @@ abstract class BaseViewModel<Intent : ViewIntent, State : ViewState>(initialStat
     abstract fun processIntent(intent: Intent)
 
 
-    protected fun updateStateOf(reducer: State.() -> State) {
-        uiState = uiState.reducer()
-    }
-
-
     protected fun updateStateFlow(reducer: State.() -> State) =
         _uiStateFlow.update(reducer)
 
 
     fun sendIntent(intent: Intent) = viewModelScope.launch { channel.send(intent) }
-
-
-    override fun handleError(error: AppError, callback: AppError.() -> Unit) {
-        error.logError()
-        callback(error)
-    }
 }
 
 interface ViewState

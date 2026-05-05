@@ -8,7 +8,6 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.RefreshTokensParams
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -24,7 +23,7 @@ object HttpClientFactory {
         baseUrl: String,
         bearerTokensBlock: suspend () -> BearerTokens? = { null },
         refreshTokensBlock: suspend RefreshTokensParams.() -> BearerTokens? = { null },
-        httpRequestBuilderBlock: (HttpRequestBuilder) -> Boolean = { false }
+        httpRequestBuilderBlock: (HttpRequestBuilder) -> Boolean = { true }
     ) = HttpClient(engineFactory = platformHttpEngine()) {
 
         expectSuccess = false
@@ -40,7 +39,11 @@ object HttpClientFactory {
         }
 
         install(plugin = Logging) {
-            logger = Logger.DEFAULT
+            logger = object : Logger {
+                override fun log(message: String) {
+                    println("HTTP Client: $message")
+                }
+            }
             level = LogLevel.BODY
         }
 
