@@ -13,7 +13,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 inline fun <DTO, DOMAIN> safeApiCall(
     crossinline apiCall: suspend () -> NetworkResult<DTO>,
-    crossinline mapper: (DTO) -> DOMAIN
+    crossinline mapper: suspend (DTO) -> DOMAIN
 ): Flow<State<DOMAIN>> = flow {
 
     emit(value = State.Loading())
@@ -24,9 +24,9 @@ inline fun <DTO, DOMAIN> safeApiCall(
             value = State.Success(data = mapper(result.data), code = result.code)
         )
 
-        is NetworkResult.Failure -> emit(
-            value = State.Error(error = mapNetworkError(result))
-        )
+        is NetworkResult.Failure -> {
+            emit(value = State.Error(error = mapNetworkError(result)))
+        }
     }
 }.catch { e ->
     if (e is CancellationException) throw e
