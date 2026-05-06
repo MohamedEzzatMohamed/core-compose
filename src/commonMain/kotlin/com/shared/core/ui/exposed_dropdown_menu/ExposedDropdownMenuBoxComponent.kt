@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> ExposedDropdownMenuBoxComponent(
+    modifier: Modifier = Modifier,
     dropdownList: List<T>,
     exposedDropdownMenuBackground: Color,
     exposedDropdownMenuShape: Shape= RoundedCornerShape(12.dp),
@@ -36,7 +37,7 @@ fun <T> ExposedDropdownMenuBoxComponent(
         exposedDropdownMenuBoxContent(expanded)
 
         ExposedDropdownMenu(
-            modifier = Modifier
+            modifier = modifier
                 .clip(exposedDropdownMenuShape)
                 .background(exposedDropdownMenuBackground),
             expanded = expanded,
