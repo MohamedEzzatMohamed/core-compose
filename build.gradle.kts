@@ -128,6 +128,7 @@ kotlin {
                 api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 api("io.ktor:ktor-client-websockets:$ktorVersion")
+                api("io.ktor:ktor-network:${ktorVersion}")
 
 
                 //Coroutines
@@ -169,6 +170,8 @@ kotlin {
             api("io.ktor:ktor-client-cio:3.3.0")
 
             api("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
+
+            api("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
         }
 
         commonTest {
