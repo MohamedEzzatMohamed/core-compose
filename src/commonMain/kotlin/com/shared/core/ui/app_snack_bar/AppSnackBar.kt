@@ -32,7 +32,7 @@ fun AppSnackBar(
         delay(duration)
         onDismiss()
     }
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Snackbar(
             modifier = modifier.align(alignment = align).clip(shape),
             containerColor = containerColor
