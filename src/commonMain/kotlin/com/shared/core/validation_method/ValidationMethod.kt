@@ -17,7 +17,7 @@ fun isPasswordValid(password: String, witLater : Boolean = false): Boolean {
         pattern = if (witLater){
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
         }else{
-            "^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+            ".*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*"
         }
     )
     return passwordRegex.matches(password)
