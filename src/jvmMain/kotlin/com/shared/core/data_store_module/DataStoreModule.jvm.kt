@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import com.shared.core.data_store_module.preferabce_storage.PreferencesStorage
 import com.shared.core.data_store_module.preferabce_storage.PreferencesStorageImpl
+import com.shared.core.jvm_utils.CoreJvmUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,7 +25,7 @@ private var dataStoreInstance: DataStore<Preferences>? = null
 fun createDesktopDataStore(): DataStore<Preferences> {
     return dataStoreInstance ?: synchronized(Unit) {
         dataStoreInstance ?: run {
-            val appDir = getAppDataDir()
+            val appDir = CoreJvmUtils.getAppDataDir(appName = "Core-Cmp")
             if (!appDir.exists()) appDir.mkdirs()
 
             val dataStoreFile = File(appDir, dataStoreFileName)
@@ -36,25 +37,4 @@ fun createDesktopDataStore(): DataStore<Preferences> {
             ).also { dataStoreInstance = it }
         }
     }
-}
-
-
-private fun getAppDataDir(): File {
-    val osName = System.getProperty("os.name").lowercase()
-    val userHome = System.getProperty("user.home")
-    val appName = "Babu"
-    val baseDir = when {
-        osName.contains("win") -> {
-
-            val localAppData = System.getenv("LOCALAPPDATA") ?: "$userHome\\AppData\\Local"
-            File(localAppData, appName)
-        }
-
-        osName.contains("mac") -> File(userHome, "Library/Application Support/$appName")
-
-        else -> File(userHome, ".$appName".lowercase())
-
-    }
-    if (!baseDir.exists()) baseDir.mkdirs()
-    return baseDir
 }
