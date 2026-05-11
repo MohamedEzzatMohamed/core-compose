@@ -2,6 +2,7 @@
 
 import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerController
 import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerManager
+import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerManager.Companion.DrawerType
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
@@ -27,7 +28,7 @@ class IosBluetoothDrawer : CashDrawerController {
     private var centralManager: CBCentralManager? = null
     private val delegate = BluetoothDelegate()
 
-    override suspend fun open(ip: String, port: Int): Result<Unit> {
+    override suspend fun open(type: DrawerType, address: String, port: Int): Result<Unit> {
         if (centralManager == null) {
             centralManager = CBCentralManager(delegate = delegate, queue = null)
         }
@@ -40,6 +41,7 @@ class IosBluetoothDrawer : CashDrawerController {
             Result.failure(Exception("Searching for and connecting to the printer..."))
         }
     }
+
     private class BluetoothDelegate : NSObject(), CBCentralManagerDelegateProtocol,
         CBPeripheralDelegateProtocol {
 
@@ -47,7 +49,8 @@ class IosBluetoothDrawer : CashDrawerController {
         private var targetPeripheral: CBPeripheral? = null
         private var writeCharacteristic: CBCharacteristic? = null
 
-        private val serviceUUIDs = listOf(CBUUID.UUIDWithString("00001101-0000-1000-8000-00805F9B34FB"))
+        private val serviceUUIDs =
+            listOf(CBUUID.UUIDWithString("00001101-0000-1000-8000-00805F9B34FB"))
 
         fun startScanning(central: CBCentralManager) {
             if (central.state == CBManagerStatePoweredOn) {

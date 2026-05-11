@@ -7,11 +7,12 @@ import android.content.pm.PackageManager
 import android.os.Build
 import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerController
 import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerManager
+import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerManager.Companion.DrawerType
 import java.util.UUID
 
 class AndroidBluetoothDrawer(private val context: Context) : CashDrawerController {
 
-    override suspend fun open(ip: String, port: Int): Result<Unit> = runCatching {
+    override suspend fun open(type: DrawerType, address: String, port: Int): Result<Unit> = runCatching {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             context.checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
             throw Exception("Missing Bluetooth Permission")

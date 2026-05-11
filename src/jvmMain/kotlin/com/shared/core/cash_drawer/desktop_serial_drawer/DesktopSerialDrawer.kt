@@ -3,13 +3,14 @@ package com.shared.core.cash_drawer.desktop_serial_drawer
 import com.fazecast.jSerialComm.SerialPort
 import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerController
 import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerManager
+import com.shared.core.cash_drawer.cash_drawer_manager.CashDrawerManager.Companion.DrawerType
 
 class DesktopSerialDrawer : CashDrawerController {
 
-    override suspend fun open(ip: String, port: Int): Result<Unit> = runCatching {
+    override suspend fun open(type: DrawerType, address: String, port: Int): Result<Unit> = runCatching {
         val commPort = SerialPort.getCommPorts().firstOrNull {
             it.descriptivePortName.contains("Printer", ignoreCase = true) ||
-                    it.systemPortName == ip
+                    it.systemPortName == address
         } ?: throw Exception("No printer was found connected via USB or Bluetooth.")
 
         commPort.baudRate = 9600
