@@ -17,6 +17,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import ro.cosminmihu.ktor.monitor.ContentLength
+import ro.cosminmihu.ktor.monitor.KtorMonitorLogging
+import ro.cosminmihu.ktor.monitor.RetentionPeriod
 
 object HttpClientFactory {
     fun create(
@@ -58,12 +61,20 @@ object HttpClientFactory {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
 
-        install(Auth) {
+        install(plugin = Auth) {
             bearer {
                 loadTokens { bearerTokensBlock() }
                 refreshTokens { refreshTokensBlock() }
                 sendWithoutRequest { request -> httpRequestBuilderBlock(request) }
             }
+        }
+
+        install(plugin = KtorMonitorLogging) {
+            sanitizeHeader { header -> header == "Authorization" }
+            filter { request -> !request.url.host.contains("cosminmihu.ro") }
+            showNotification = true
+            retentionPeriod = RetentionPeriod.OneHour
+            maxContentLength = ContentLength.Default
         }
     }
 }

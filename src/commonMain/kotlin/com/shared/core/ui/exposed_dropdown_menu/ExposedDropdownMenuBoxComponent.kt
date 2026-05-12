@@ -1,4 +1,4 @@
-package com.holouly.core.ui_component
+package com.shared.core.ui.exposed_dropdown_menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
