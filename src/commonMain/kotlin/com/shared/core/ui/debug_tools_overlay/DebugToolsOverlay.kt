@@ -1,0 +1,96 @@
+package com.shared.core.ui.debug_tools_overlay
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import ro.cosminmihu.ktor.monitor.KtorMonitor
+
+@Composable
+fun BoxScope.DebugToolsOverlay(
+    floatingBtnIcon: DrawableResource,
+    dismissBtnIcon: DrawableResource,
+    floatingIconTint: Color,
+) {
+
+    var showDebugPanel by remember { mutableStateOf(false) }
+
+    if (!showDebugPanel) {
+        FloatingActionButton(
+            modifier = Modifier.align(Alignment.BottomEnd).padding(all = 16.dp),
+            onClick = { showDebugPanel = !showDebugPanel }) {
+            Icon(
+                modifier = Modifier.size(25.dp),
+                painter = painterResource(floatingBtnIcon),
+                contentDescription = "Debug",
+                tint = floatingIconTint
+            )
+        }
+    }
+
+    if (showDebugPanel) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.6f))
+                .zIndex(999f)
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize().clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = { showDebugPanel = false })
+            )
+
+            Card(
+                modifier = Modifier.align(Alignment.Center)
+                    .fillMaxWidth(fraction = 0.9f)
+                    .fillMaxHeight(fraction = 0.8f),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+
+                    KtorMonitor()
+
+                    IconButton(
+                        modifier = Modifier.align(Alignment.BottomEnd),
+                        onClick = {
+                            showDebugPanel = !showDebugPanel
+                        }, content = {
+                            PainterResource(painter = dismissBtnIcon)
+                        })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PainterResource(painter: DrawableResource) {
+    Icon(
+        painter = painterResource(painter),
+        contentDescription = "PainterResource"
+    )
+}
