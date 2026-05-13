@@ -108,7 +108,7 @@ kotlin {
                 api(dependencyNotation = "org.jetbrains.compose.ui:ui:1.10.3")
                 api(dependencyNotation = "org.jetbrains.compose.ui:ui-tooling-preview:1.10.3")
                 api(dependencyNotation = "org.jetbrains.compose.material3:material3:1.9.0")
-                implementation(dependencyNotation = "org.jetbrains.compose.components:components-resources:1.11.0")
+                implementation(dependencyNotation = "org.jetbrains.compose.components:components-resources:1.10.3")
 
                 // 3. Lifecycle & Navigation
                 api(dependencyNotation = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")

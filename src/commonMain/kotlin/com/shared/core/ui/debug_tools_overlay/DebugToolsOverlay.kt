@@ -36,7 +36,7 @@ fun BoxScope.DebugToolsOverlay(
     floatingIconTint: Color,
 ) {
 
-    var showDebugPanel by remember { mutableStateOf(false) }
+    var showDebugPanel by remember { mutableStateOf(value = false) }
 
     if (!showDebugPanel) {
         FloatingActionButton(
@@ -68,7 +68,7 @@ fun BoxScope.DebugToolsOverlay(
                 modifier = Modifier.align(Alignment.Center)
                     .fillMaxWidth(fraction = 0.9f)
                     .fillMaxHeight(fraction = 0.8f),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(size = 16.dp)
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
 
