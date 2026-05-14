@@ -6,7 +6,7 @@ import com.shared.core.app_error.AppError
 sealed class State<out T> {
 
     class Loading<T> : State<T>()
-    data class Success<T>(val data: T? = null, val code: Int, val error: AppError? = null) :
+    data class Success<T>(val data: T? = null, val code: Int? = null, val error: AppError? = null) :
         State<T>()
 
     data class Error<T>(val error: AppError) : State<T>()
