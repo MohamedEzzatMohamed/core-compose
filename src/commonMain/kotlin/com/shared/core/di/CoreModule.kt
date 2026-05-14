@@ -14,6 +14,6 @@ val coreModule = module {
         CoroutinesScopeModule,
         dataStorePlatformModule,
         localeManagerModule,
-        networkModule
+        networkModule,
     )
 }
