@@ -47,7 +47,7 @@ object HttpClientFactory {
                     println("HTTP Client: $message")
                 }
             }
-            level = LogLevel.BODY
+            level = LogLevel.ALL
         }
 
         install(plugin = HttpTimeout) {

@@ -39,7 +39,7 @@ fun mapNetworkError(result: NetworkResult.Failure): AppError {
         null -> AppError.NoInternet
         401 -> AppError.Unauthorized
         403 -> AppError.Forbidden
-        404 -> AppError.NotFound
+        404 -> AppError.NotFound(result.message)
         in 500..599 -> AppError.ServerError
         else -> AppError.Unknown(result.message)
     }

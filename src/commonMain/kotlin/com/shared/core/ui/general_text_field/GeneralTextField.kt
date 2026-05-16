@@ -119,12 +119,17 @@ fun GeneralTextField(
                     } else {
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
-                    Box(modifier = Modifier.weight(1.0f).padding(vertical = 16.dp)) {
+
+                    Box(
+                        modifier = Modifier.weight(1.0f).padding(vertical = 16.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
                         if (text.isEmpty()) {
                             Text(text = placeholder, style = placeholderTextStyle)
                         }
                         Box(modifier = Modifier.fillMaxWidth()) { innerTextField() }
                     }
+
                     if (trailingIcon != null) {
                         trailingIcon()
                     } else {
