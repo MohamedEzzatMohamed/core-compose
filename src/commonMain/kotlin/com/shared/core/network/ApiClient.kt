@@ -3,6 +3,8 @@ package com.shared.core.network
 import com.shared.core.state.State
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.auth.authProviders
+import io.ktor.client.plugins.auth.providers.BearerAuthProvider
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.options
@@ -99,6 +101,11 @@ class ApiClient(val client: HttpClient) {
         }
     }
 
+
+    suspend fun clearCashedToken(onClearCash : suspend () -> Unit) {
+        onClearCash()
+        client.authProviders.filterIsInstance<BearerAuthProvider>().forEach { it.clearToken() }
+    }
 
     suspend inline fun <reified T> execute(
         block: suspend () -> HttpResponse
