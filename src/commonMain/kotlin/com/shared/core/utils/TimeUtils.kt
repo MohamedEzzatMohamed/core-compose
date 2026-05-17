@@ -1,5 +1,20 @@
 package com.shared.core.utils
 
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Instant
+
+
+fun formatUtcDate(dateString: String): String {
+    val instant = Instant.parse(input = dateString)
+    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+    val day = localDateTime.day.toString()
+    val month = localDateTime.month.number
+    val time = localDateTime.time
+    return "$day-$month-${localDateTime.year} $time"
+}
+
 /**
  * Platform-specific function to get current time in milliseconds since epoch.
  * This is used instead of System.currentTimeMillis() for multiplatform compatibility.

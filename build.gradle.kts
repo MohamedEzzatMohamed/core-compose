@@ -148,6 +148,9 @@ kotlin {
                 val composeIcons = "1.1.1"
                 api(dependencyNotation = "br.com.devsrsouza.compose.icons:tabler-icons:$composeIcons")
                 api(dependencyNotation = "br.com.devsrsouza.compose.icons:feather:$composeIcons")
+
+                // 9. Date Time
+                api(dependencyNotation ="org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
             }
         }
 
