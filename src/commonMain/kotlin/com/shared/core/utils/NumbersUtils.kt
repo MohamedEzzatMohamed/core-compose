@@ -1,5 +1,8 @@
 package com.shared.core.utils
 
+import kotlin.math.pow
+import kotlin.math.roundToInt
+
 
 fun Double.formatNumber(
     precision: Int,
@@ -17,4 +20,10 @@ fun Double.formatNumber(
     } else {
         formattedInteger
     }
+}
+
+fun Double.formatPrice(digits: Int): String {
+    val factor = 10.0.pow(digits)
+    val rounded = (this * factor).roundToInt() / factor
+    return rounded.toString()
 }
