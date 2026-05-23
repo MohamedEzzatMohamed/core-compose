@@ -35,11 +35,16 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun <T> ExposedDropdownMenuBoxComponent(
     modifier: Modifier = Modifier,
+    searchModifier: Modifier = Modifier,
+    searchLeadingBoxModifier: Modifier = Modifier,
+    searchIconModifier: Modifier = Modifier,
     dropdownList: List<T>,
     isSearchable: Boolean = false,
     searchQueryValue: String = "",
     searchPlaceholder: String = "Search...",
+    searchTextStyle: TextStyle = TextStyle.Default,
     searchPlaceholderTextStyle: TextStyle = TextStyle.Default,
+    searchInputShape: Shape = RoundedCornerShape(size = 8.dp),
     exposedDropdownMenuBackground: Color,
     exposedDropdownMenuShape: Shape = RoundedCornerShape(size = 12.dp),
     searchIconResource: DrawableResource? = null,
@@ -71,14 +76,19 @@ fun <T> ExposedDropdownMenuBoxComponent(
             if (isSearchable) {
 
                 SearchTextFiled(
+                    modifier = searchModifier,
+                    leadingBoxModifier = searchLeadingBoxModifier,
+                    iconModifier = searchIconModifier,
                     searchQueryValue = searchQueryValue,
                     searchPlaceholder = searchPlaceholder,
+                    textStyle = searchTextStyle,
                     placeholderTextStyle = searchPlaceholderTextStyle,
                     iconResource = searchIconResource,
                     searchBackgroundColor = searchBackgroundColor,
                     searchIconTint = searchIconTint,
                     searchFocusedColor = searchFocusedColor,
                     searchUnFocusedColor = searchUnFocusedColor,
+                    searchInputShape = searchInputShape,
                     onSearchQueryChange = onSearchQueryChange,
                 )
 
@@ -106,6 +116,9 @@ fun <T> ExposedDropdownMenuBoxComponent(
 
 @Composable
 fun SearchTextFiled(
+    modifier: Modifier = Modifier,
+    leadingBoxModifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     searchQueryValue: String,
     searchPlaceholder: String,
     iconResource: DrawableResource?,
@@ -113,35 +126,37 @@ fun SearchTextFiled(
     searchIconTint: Color,
     searchFocusedColor: Color,
     searchUnFocusedColor: Color,
+    searchInputShape: Shape,
+    textStyle: TextStyle ,
     placeholderTextStyle: TextStyle,
     onSearchQueryChange: (String) -> Unit = {},
 ) {
     GeneralTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .wrapContentHeight(),
         placeholder = searchPlaceholder,
         text = searchQueryValue,
+        textStyle = textStyle,
         placeholderTextStyle = placeholderTextStyle,
         onValueChange = onSearchQueryChange,
         leadingIcon = {
-            Box(modifier = Modifier.padding(horizontal = 10.dp)) {
+            Box(modifier = leadingBoxModifier.padding(horizontal = 10.dp)) {
                 iconResource?.let {
                     Icon(
                         painter = painterResource(it),
                         contentDescription = "Search",
                         tint = searchIconTint,
-                        modifier = Modifier.size(16.dp),
-
-                        )
+                        modifier = iconModifier.size(16.dp),
+                    )
                 }
             }
         },
         keyboardType = KeyboardType.Text,
         imeAction = ImeAction.Next,
 
-        shape = RoundedCornerShape(size = 8.dp),
+        shape = searchInputShape,
         backgroundColor = searchBackgroundColor,
         focusedColor = searchFocusedColor,
         unFocusedColor = searchUnFocusedColor,
