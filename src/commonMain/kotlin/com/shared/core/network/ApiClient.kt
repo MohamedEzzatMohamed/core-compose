@@ -5,6 +5,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.auth.authProviders
 import io.ktor.client.plugins.auth.providers.BearerAuthProvider
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.options
@@ -53,11 +54,23 @@ class ApiClient(val client: HttpClient) {
     }
 
 
+
     suspend inline fun <reified T, reified R> patch(
         endpoint: String, body: R,
         headers: Map<String, String> = emptyMap()
     ): NetworkResult<T> = execute {
         client.patch(urlString = endpoint) {
+            headers.forEach { (key, value) -> header(key, value) }
+            setBody(body)
+        }
+    }
+
+
+    suspend inline fun <reified T, reified R> delete(
+        endpoint: String, body: R,
+        headers: Map<String, String> = emptyMap()
+    ): NetworkResult<T> = execute {
+        client.delete(urlString = endpoint) {
             headers.forEach { (key, value) -> header(key, value) }
             setBody(body)
         }
