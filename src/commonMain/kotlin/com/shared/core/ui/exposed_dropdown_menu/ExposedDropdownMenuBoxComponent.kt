@@ -60,6 +60,7 @@ fun <T> ExposedDropdownMenuBoxComponent(
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
+        modifier = modifier,
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }
     ) {
