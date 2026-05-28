@@ -151,6 +151,12 @@ kotlin {
 
                 // 9. Date Time
                 api(dependencyNotation ="org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+
+                // Paging3
+                val pagingVersion = "3.5.0"
+                api(dependencyNotation = "androidx.paging:paging-common:$pagingVersion")
+                api(dependencyNotation = "androidx.paging:paging-compose:$pagingVersion")
+                api(dependencyNotation = "androidx.paging:paging-testing:$pagingVersion")
             }
         }
 
