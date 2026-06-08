@@ -41,6 +41,7 @@ fun SubcomposeAsyncImageComponent(
             Image(
                 painter = errorPlaceholder,
                 contentDescription = "Loaded image",
+                contentScale = contentScale,
                 modifier = modifier.fillMaxSize()
             )
         }
