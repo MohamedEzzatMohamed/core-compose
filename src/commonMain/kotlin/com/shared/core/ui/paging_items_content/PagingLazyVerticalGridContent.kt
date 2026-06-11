@@ -15,6 +15,7 @@ fun <T : Any> PagingLazyVerticalGridContent(
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     pagingItems: LazyPagingItems<T>,
+    key: ((index: Int) -> Any)? = null,
     item: @Composable LazyGridItemScope.(T) -> Unit,
     onFirstLoadError: @Composable () -> Unit = {},
     onFirstLoadLoading: @Composable () -> Unit = {},
@@ -30,7 +31,7 @@ fun <T : Any> PagingLazyVerticalGridContent(
 
         items(
             count = pagingItems.itemCount,
-            key = { index -> pagingItems[index]?.hashCode() ?: index }
+            key = key ?: { index -> pagingItems[index]?.hashCode() ?: index }
         ) { index ->
             pagingItems[index]?.let { item(it) }
         }
