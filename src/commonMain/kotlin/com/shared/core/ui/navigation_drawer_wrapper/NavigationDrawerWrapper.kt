@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 fun NavigationDrawerWrapper(
     modifier: Modifier = Modifier,
     drawerState: DrawerState,
+    gesturesEnabled : Boolean = false,
     drawerContainerColor: Color = DrawerDefaults.standardContainerColor,
     modalDrawerSheetContent: @Composable ColumnScope.() -> Unit,
     contentScreens: @Composable () -> Unit
@@ -22,6 +23,7 @@ fun NavigationDrawerWrapper(
 
     DismissibleNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = gesturesEnabled,
         drawerContent = {
             DismissibleDrawerSheet(
                 modifier = modifier,

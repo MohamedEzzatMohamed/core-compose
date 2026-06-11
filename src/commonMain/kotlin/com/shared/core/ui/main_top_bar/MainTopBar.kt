@@ -63,24 +63,24 @@ fun MainTopBar(
                 }, navigationIcon = {
                     leftIcon?.let { leftIcon ->
                         IconButton(onClick = { onLeftIconClicked() }) {
-                            IconWrapper(size = 24.dp) {
+                            IconWrapper(size = 24.dp, iconContent = {
                                 Icon(
                                     painter = painterResource(resource = leftIcon),
                                     contentDescription = "Menu icon",
                                 )
-                            }
+                            })
                         }
                     }
                 }, actions = {
                     rightIcon?.let { rightIcon ->
                         IconButton(onClick = dropUnlessResumed(block = onRightIconClicked)) {
-                            IconWrapper(size = 24.dp) {
+                            IconWrapper(size = 24.dp, iconContent = {
                                 Icon(
                                     painter = painterResource(resource = rightIcon),
                                     contentDescription = "Profile",
                                     modifier = Modifier.size(20.dp)
                                 )
-                            }
+                            })
                         }
                     }
                 }, scrollBehavior = scrollBehavior
