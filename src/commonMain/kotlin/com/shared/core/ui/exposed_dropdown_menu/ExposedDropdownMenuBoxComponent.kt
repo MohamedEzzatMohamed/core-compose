@@ -77,7 +77,9 @@ fun <T> ExposedDropdownMenuBoxComponent(
             if (isSearchable) {
 
                 SearchTextFiled(
-                    modifier = searchModifier,
+                    modifier = searchModifier.fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                        .wrapContentHeight(),
                     leadingBoxModifier = searchLeadingBoxModifier,
                     iconModifier = searchIconModifier,
                     searchQueryValue = searchQueryValue,
@@ -128,15 +130,12 @@ fun SearchTextFiled(
     searchFocusedColor: Color,
     searchUnFocusedColor: Color,
     searchInputShape: Shape,
-    textStyle: TextStyle ,
+    textStyle: TextStyle,
     placeholderTextStyle: TextStyle,
     onSearchQueryChange: (String) -> Unit = {},
 ) {
     GeneralTextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-            .wrapContentHeight(),
+        modifier = modifier,
         placeholder = searchPlaceholder,
         text = searchQueryValue,
         textStyle = textStyle,

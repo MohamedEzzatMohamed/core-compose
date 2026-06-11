@@ -18,21 +18,20 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CustomCircularProgressIndicator(
     modifier: Modifier = Modifier,
+    indicatorSize: Dp = 100.dp,
     background: Color = Color.Black.copy(alpha = 0.3f),
     borderRadius: Dp = 16.dp,
     color: Color = Color(0xFFFEBF00),
     trackColor: Color = ProgressIndicatorDefaults.circularIndeterminateTrackColor
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = background),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
 
         Box(
             modifier = Modifier
-                .size(100.dp)
+                .size(indicatorSize)
                 .background(
                     color = background,
                     shape = RoundedCornerShape(size = borderRadius)
