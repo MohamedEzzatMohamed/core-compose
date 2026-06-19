@@ -43,6 +43,7 @@ fun GeneralTextField(
     text: String = "",
     textStyle: TextStyle = TextStyle.Default,
     placeholderTextStyle: TextStyle = TextStyle.Default,
+    placeholderContentAlignment: Alignment = Alignment.CenterStart,
     textAlignment: Alignment.Vertical = Alignment.CenterVertically,
     cursorBrush: Brush = SolidColor(Color.Black),
     focusedColor: Color = MaterialTheme.colorScheme.primary,
@@ -59,6 +60,7 @@ fun GeneralTextField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = false,
+    mainLine: Int = 1,
     maxLine: Int = 1,
 ) {
     val isKeyboardTypeNumber =
@@ -88,7 +90,6 @@ fun GeneralTextField(
                 }
             },
             textStyle = textStyle,
-            maxLines = maxLine,
             singleLine = singleLine,
             interactionSource = interactionSource,
             readOnly = readOnly,
@@ -122,7 +123,7 @@ fun GeneralTextField(
 
                     Box(
                         modifier = Modifier.weight(1.0f).padding(vertical = 16.dp),
-                        contentAlignment = Alignment.CenterStart
+                        contentAlignment = placeholderContentAlignment
                     ) {
                         if (text.isEmpty()) {
                             Text(text = placeholder, style = placeholderTextStyle)
@@ -137,6 +138,8 @@ fun GeneralTextField(
                     }
                 }
             },
+            minLines = mainLine,
+            maxLines = maxLine,
         )
         errorMessage?.asString()?.let { message ->
             Text(
