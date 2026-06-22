@@ -28,7 +28,7 @@ fun <T : Any> PagingLazyColumnContent(
 
         items(
             count = pagingItems.itemCount,
-            key = { index -> pagingItems[index]?.hashCode() ?: index }
+            key = { index -> pagingItems.peek(index)?.hashCode() ?: index }
         ) { index ->
             pagingItems[index]?.let { item(it) }
         }

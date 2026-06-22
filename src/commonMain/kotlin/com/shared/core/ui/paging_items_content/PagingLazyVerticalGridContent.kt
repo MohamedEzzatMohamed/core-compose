@@ -31,7 +31,7 @@ fun <T : Any> PagingLazyVerticalGridContent(
 
         items(
             count = pagingItems.itemCount,
-            key = key ?: { index -> pagingItems[index]?.hashCode() ?: index }
+            key = key ?: { index -> pagingItems.peek(index)?.hashCode() ?: index }
         ) { index ->
             pagingItems[index]?.let { item(it) }
         }
