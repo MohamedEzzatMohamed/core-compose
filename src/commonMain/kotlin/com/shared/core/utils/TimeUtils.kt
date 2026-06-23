@@ -1,5 +1,6 @@
 package com.shared.core.utils
 
+import com.shared.core.app_logger.AppLogger
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
@@ -13,6 +14,22 @@ fun formatUtcDate(dateString: String): String {
     val month = localDateTime.month.number
     val time = localDateTime.time
     return "$day-$month-${localDateTime.year} $time"
+}
+
+
+fun formatDateTime(dateTimeString: String?): String {
+    if (dateTimeString.isNullOrBlank()) return ""
+    return try {
+        val millis = parseDateTimeToMillis(dateTimeStr = dateTimeString)
+        if (millis != null) {
+            formatDateTimeDisplay(timestampMillis = millis)
+        } else {
+            dateTimeString
+        }
+    } catch (e: Exception) {
+        AppLogger.e(message = "Cannot be format date time", throwable = e)
+        dateTimeString
+    }
 }
 
 /**
