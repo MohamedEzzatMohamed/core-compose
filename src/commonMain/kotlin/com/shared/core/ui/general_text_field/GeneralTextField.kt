@@ -54,6 +54,7 @@ fun GeneralTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     errorMessage: UiText? = null,
+    enabled : Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
     isVisible: Boolean = false,
@@ -92,6 +93,7 @@ fun GeneralTextField(
             textStyle = textStyle,
             singleLine = singleLine,
             interactionSource = interactionSource,
+            enabled = enabled,
             readOnly = readOnly,
             visualTransformation = if (keyboardType == KeyboardType.Password) {
                 if (isVisible) {
