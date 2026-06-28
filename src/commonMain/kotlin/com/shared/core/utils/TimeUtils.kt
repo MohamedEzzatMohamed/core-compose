@@ -17,10 +17,10 @@ fun formatUtcDate(dateString: String): String {
 }
 
 
-fun formatDateTime(dateTimeString: String?): String {
+fun formatDateTime(dateTimeString: String?, inputPattern: String = "yyyy-MM-dd HH:mm:ss"): String {
     if (dateTimeString.isNullOrBlank()) return ""
     return try {
-        val millis = parseDateTimeToMillis(dateTimeStr = dateTimeString)
+        val millis = parseDateTimeToMillis(dateTimeStr = dateTimeString, inputPattern = inputPattern)
         if (millis != null) {
             formatDateTimeDisplay(timestampMillis = millis)
         } else {
@@ -67,7 +67,7 @@ expect fun formatPaddedInt(value: Int, width: Int): String
  * Parse a datetime string in format "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd HH:mm"
  * to milliseconds since epoch. Returns null if parsing fails.
  */
-expect fun parseDateTimeToMillis(dateTimeStr: String): Long?
+expect fun parseDateTimeToMillis(dateTimeStr: String, inputPattern : String): Long?
 
 /**
  * Calculate elapsed seconds between a timestamp and now.

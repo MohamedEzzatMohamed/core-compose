@@ -6,8 +6,10 @@ import platform.Foundation.NSLocale
 import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSNumberFormatterDecimalStyle
+import platform.Foundation.NSTimeZone
 import platform.Foundation.dateWithTimeIntervalSince1970
 import platform.Foundation.timeIntervalSince1970
+import platform.Foundation.timeZoneWithName
 
 
 actual fun currentTimeMillis(): Long {
@@ -53,17 +55,24 @@ actual fun formatPaddedInt(value: Int, width: Int): String {
 }
 
 
-actual fun parseDateTimeToMillis(dateTimeStr: String): Long? {
+actual fun parseDateTimeToMillis(dateTimeStr: String, inputPattern: String): Long? {
+    val trimmed = dateTimeStr.trim()
+    // Check if it's likely UTC (contains Z or T)
+    val isUtc = trimmed.endsWith("Z") || trimmed.contains("T")
+
     // Normalize ISO 8601 format (e.g. "2026-02-01T15:04:28.000000Z") to "yyyy-MM-dd HH:mm:ss"
-    val normalized = dateTimeStr
+    val normalized = trimmed
         .replace("T", " ")
         .removeSuffix("Z")
         .replace(Regex("\\.\\d+$"), "") // strip fractional seconds
     val formatter = NSDateFormatter()
-    formatter.setDateFormat("yyyy-MM-dd HH:mm:ss")
+    if (isUtc) {
+        formatter.timeZone = NSTimeZone.timeZoneWithName("UTC")!!
+    }
+    formatter.setDateFormat(inputPattern)
     var date = formatter.dateFromString(normalized)
     if (date == null) {
-        formatter.setDateFormat("yyyy-MM-dd HH:mm")
+        formatter.setDateFormat(inputPattern)
         date = formatter.dateFromString(normalized)
     }
     return date?.timeIntervalSince1970?.let { (it * 1000).toLong() }
@@ -94,7 +103,6 @@ actual fun formatDateTimeDisplay(timestampMillis: Long): String {
     formatter.locale = NSLocale("en_US")
     return formatter.stringFromDate(date)
 }
-
 
 
 actual fun urlEncode(value: String): String {
