@@ -13,6 +13,26 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions.add("environment")
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+        }
+        create("prod") {
+            dimension = "environment"
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            consumerProguardFiles("consumer-rules.pro")
+        }
+        debug {
+            matchingFallbacks.addAll(listOf("debug"))
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
