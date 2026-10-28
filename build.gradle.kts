@@ -44,7 +44,6 @@ android {
 }
 
 dependencies {
-    
     // Android Core & Lifecycle
     api(libs.androidx.core.ktx)
     api(libs.androidx.activity.compose)
