@@ -17,9 +17,11 @@ android {
     productFlavors {
         create("dev") {
             dimension = "environment"
+            matchingFallbacks.addAll(listOf("dev", "debug"))
         }
         create("prod") {
             dimension = "environment"
+            matchingFallbacks.addAll(listOf("prod", "release"))
         }
     }
 
@@ -27,9 +29,10 @@ android {
         release {
             isMinifyEnabled = false
             consumerProguardFiles("consumer-rules.pro")
+            matchingFallbacks.addAll(listOf("release", "debug"))
         }
         debug {
-            matchingFallbacks.addAll(listOf("debug"))
+            matchingFallbacks.addAll(listOf("debug", "release"))
         }
     }
 
